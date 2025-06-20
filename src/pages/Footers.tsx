@@ -6,7 +6,7 @@ const Footers = () => {
     <footer className='footer'>
           <div className='footer-content'>
             <p className='footer-text'>
-              Created by <a href='#' className='footer-link'>1nsh</a>
+              Crafted By <a href='#' className='footer-link'>1nsh</a>
             </p>
           </div>
     </footer>

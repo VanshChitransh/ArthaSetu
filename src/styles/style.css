@@ -125,6 +125,97 @@
 
 @layer components {
   /* Layout Components */
+
+  .seed-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    padding-top: 120px;
+  }
+
+  .seed-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.02em;
+  }
+
+  [data-theme="light"] .seed-title {
+    background: linear-gradient(180deg, var(--color-text-primary-light) 10%, var(--color-text-secondary-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .seed-subtitle {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  [data-theme="light"] .seed-subtitle {
+    color: var(--color-text-secondary-light);
+  }
+
+  .seed-input-container {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .seed-input {
+    width: 100%;
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 16px 24px 16px 20px;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    outline: none;
+    transition: all var(--animation-duration-normal) ease;
+    font-family: var(--font-inter);
+  }
+
+  .seed-input::placeholder {
+    color: var(--color-text-secondary);
+    font-weight: 400;
+  }
+
+  .seed-input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: var(--color-bg-primary);
+  }
+
+  [data-theme="light"] .seed-input {
+    background: var(--color-bg-secondary-light);
+    border-color: var(--color-border-light);
+    color: var(--color-text-primary-light);
+  }
+
+  [data-theme="light"] .seed-input::placeholder {
+    color: var(--color-text-secondary-light);
+  }
+
+  [data-theme="light"] .seed-input:focus {
+    background: var(--color-bg-primary-light);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
   .container {
     max-width: var(--size-container-max);
     margin: 0 auto;
