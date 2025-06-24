@@ -13,7 +13,7 @@ const SecretPhraseSection = ({
         <h2 className="text-2xl font-bold text-primary">Your Secret Phrase</h2>
         <button
           onClick={() => setShowSecretPhrase(!showSecretPhrase)}
-          className="p-2 glass rounded-lg text-primary hover:border-accent transition-all duration-300"
+          className="p-2 glass rounded-lg text-primary hover:border-accent transition-all duration-300 cursor-pointer"
         >
           {showSecretPhrase ? <EyeOff size={20} /> : <Eye size={20} />}
         </button>
@@ -34,7 +34,7 @@ const SecretPhraseSection = ({
           
           <button
             onClick={onCopy}
-            className="w-full py-3 btn-primary font-medium rounded-lg flex items-center justify-center gap-2 shadow-lg"
+            className="w-full py-3 btn-primary font-medium rounded-lg flex items-center justify-center gap-2 shadow-lg cursor-pointer"
           >
             <Copy size={20} />
             Click Anywhere To Copy
@@ -42,9 +42,16 @@ const SecretPhraseSection = ({
         </div>
       ) : (
         <div className="text-center py-8">
-          <div className="w-16 h-16 glass rounded-full flex items-center justify-center mx-auto mb-4">
+          <button
+            onClick={() => setShowSecretPhrase(!showSecretPhrase)}
+            className="p-2 glass rounded-lg text-primary hover:border-accent transition-all duration-300 cursor-pointer"
+          >
+            {showSecretPhrase ? <Eye size={35}/> : <EyeOff size={35}/>}
+            
+          </button>
+          {/* <div className="w-16 h-16 glass rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer">
             <EyeOff size={24} className="text-secondary" />
-          </div>
+          </div> */}
           <p className="text-secondary">Click the eye icon to reveal your secret phrase</p>
         </div>
       )}

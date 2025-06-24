@@ -15,6 +15,7 @@ const WalletCard = ({ wallet, onDelete }: WalletCardProps) => {
   const handleDelete = () => {
     onDelete(wallet.id);
     console.log(`${wallet.name} deleted!`);
+    console.log(wallet);
   };
 
   return (
@@ -24,7 +25,7 @@ const WalletCard = ({ wallet, onDelete }: WalletCardProps) => {
         <h3 className="text-xl font-bold text-primary">{wallet.name}</h3>
         <button
           onClick={handleDelete}
-          className="p-2 text-secondary hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100"
+          className="p-2 text-secondary hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-all duration-300 opacity-0 group-hover:opacity-100 cursor-pointer"
         >
           <Trash size={16} />
         </button>
@@ -41,40 +42,40 @@ const WalletCard = ({ wallet, onDelete }: WalletCardProps) => {
       {/* Public Key */}
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-secondary text-sm">Public Key</p>
+          <p className="text-secondary text-sm cursor-pointer" onClick={() => {copyToClipboard(wallet.publicKey, "Public key")}}>Public Key</p>
           <button
             onClick={() => copyToClipboard(wallet.publicKey, "Public key")}
-            className="p-1 text-secondary hover:text-primary transition-all duration-300"
+            className="p-2 text-secondary hover:text-primary transition-all duration-300 cursor-pointer hover:text-green-400 hover:bg-green-500/10 rounded-lg"
           >
             <Copy size={14} />
           </button>
         </div>
         <div className="glass rounded-lg p-3">
-          <p className="text-primary font-mono text-sm break-all">{wallet.publicKey}</p>
+          <p className="text-primary font-mono text-sm break-all cursor-pointer" onClick={() => copyToClipboard(wallet.publicKey, "Public key")}>{wallet.publicKey}</p>
         </div>
       </div>
 
       {/* Private Key */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <p className="text-secondary text-sm">Private Key</p>
+          <p className="text-secondary text-sm cursor-pointer" onClick={() => copyToClipboard(wallet.privateKey, "Private key")}>Private Key</p>
           <div className="flex items-center gap-2">
             <button
               onClick={() => copyToClipboard(wallet.privateKey, "Private key")}
-              className="p-1 text-secondary hover:text-primary transition-all duration-300"
+              className="p-2 text-secondary hover:text-primary transition-all duration-300 cursor-pointer hover:text-green-400 hover:bg-green-500/10 rounded-lg"
             >
               <Copy size={14} />
             </button>
             <button
               onClick={() => setShowPrivateKey(!showPrivateKey)}
-              className="p-1 text-secondary hover:text-primary transition-all duration-300"
+              className="p-2 text-secondary hover:text-primary transition-all duration-300 cursor-pointer hover:text-red-400 hover:bg-red-500/10 rounded-lg"
             >
               {showPrivateKey ? <EyeOff size={14} /> : <Eye size={14} />}
             </button>
           </div>
         </div>
         <div className="glass rounded-lg p-3">
-          <p className="text-primary font-mono text-sm break-all">
+          <p className="text-primary font-mono text-sm break-all cursor-pointer" onClick={() => {copyToClipboard(wallet.privateKey, "Private key")}}>
             {showPrivateKey ? wallet.privateKey : "•".repeat(64)}
           </p>
         </div>

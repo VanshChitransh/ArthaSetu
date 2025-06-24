@@ -1,0 +1,165 @@
+/* Modern Loader - Matches your design system */
+.loader {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+  margin: 0 auto;
+  background: conic-gradient(from 0deg, transparent, var(--color-accent));
+  animation: spin var(--animation-duration-slow) linear infinite;
+}
+
+.loader::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  background: var(--color-bg-primary);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.loader::after {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  background: var(--color-bg-secondary);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+/* Light theme adjustments */
+[data-theme="light"] .loader::before {
+  background: var(--color-bg-primary-light);
+}
+
+[data-theme="light"] .loader::after {
+  background: var(--color-bg-secondary-light);
+}
+
+/* Alternative: Pulsing dots loader */
+.loader-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader-dots .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: pulse 1.4s ease-in-out infinite both;
+}
+
+.loader-dots .dot:nth-child(1) { animation-delay: -0.32s; }
+.loader-dots .dot:nth-child(2) { animation-delay: -0.16s; }
+.loader-dots .dot:nth-child(3) { animation-delay: 0s; }
+
+/* Alternative: Gradient ring loader */
+.loader-ring {
+  width: 40px;
+  height: 40px;
+  border: 3px solid transparent;
+  border-top: 3px solid var(--color-accent);
+  border-radius: 50%;
+  animation: spin var(--animation-duration-slow) linear infinite;
+  margin: 0 auto;
+  position: relative;
+}
+
+.loader-ring::before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  right: -3px;
+  bottom: -3px;
+  border: 3px solid transparent;
+  border-bottom: 3px solid var(--color-accent);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: spin var(--animation-duration-slow) linear infinite reverse;
+}
+
+/* Keyframes */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 80%, 100% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Loading container with text */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 40px;
+}
+
+.loading-text {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+[data-theme="light"] .loading-text {
+  color: var(--color-text-secondary-light);
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* Full page loader overlay */
+.loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  transition: opacity var(--animation-duration-normal) ease;
+}
+
+[data-theme="light"] .loader-overlay {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .loader {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .loader-ring {
+    width: 32px;
+    height: 32px;
+  }
+}
