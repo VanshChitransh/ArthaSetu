@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+// import React, { useState } from 'react'
 import '../styles/style.css'
 import { useNavigate } from 'react-router-dom';
-import SeedGeneration from './SeedGeneration';
+// import SeedGeneration from './SeedGeneration';
 
 const Landing = () => {
   const navigate = useNavigate();
-  const[cryptoChain, setCryptoChain] = useState('solana');
+  // const[cryptoChain, setCryptoChain] = useState('solana');
   return (
     <>
     <div className='bg-gradient'></div>
