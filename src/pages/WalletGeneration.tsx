@@ -23,6 +23,7 @@ const WalletGeneration = ({
   const [secretPhrase, setSecretPhrase] = useState<string[]>(initialSecretPhrase || []);
   const [showSecretPhrase, setShowSecretPhrase] = useState(false);
   const [loader, setLoader] = useState(true);
+  const [initialWalletGenerated, setInitialWalletGenerated] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -59,6 +60,7 @@ const WalletGeneration = ({
           console.log(wallets.length, "<- This is the length of the wallet ");
         } catch (error) {
           console.error("Error generating initial wallet:", error);
+          setInitialWalletGenerated(true);
         }
       };
       generateInitialWallet();
@@ -68,11 +70,11 @@ const WalletGeneration = ({
   }, [initialWallets, blockchainType]);
 
 
-  // useEffect(() => {
-  //   if(wallets.length == 0){
-  //         navigate('/SeedGeneration')
-  //   }
-  // }, [wallets, loader])
+  useEffect(() => {
+    if(wallets.length == 0 && !loader && initialWalletGenerated){
+          navigate('/SeedGeneration')
+    }
+  }, [wallets, loader, initialWalletGenerated, navigate])
   
   const addWallet = async () => {
     try{
@@ -107,6 +109,10 @@ const WalletGeneration = ({
             id: (index + 1).toString(),
             name: `Wallet ${index + 1}`
       }));
+      if(filteredWallets.length == 0){
+        // navigate('/SeedGeneration')
+        setTimeout(() => {navigate('/SeedGeneration')}, 100)
+      }
       return updateWallets;
     });
   };
