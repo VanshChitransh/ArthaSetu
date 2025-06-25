@@ -18,9 +18,11 @@
 
 import React from 'react'
 import '../styles/style.css'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 const SeedGeneration = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { cryptoChain } = location.state || {};
   return (
     <>
       <div className='bg-gradient'></div>
@@ -33,7 +35,7 @@ const SeedGeneration = () => {
             placeholder='Enter your secret phrase (or leave blank to generate)'
           />
         </div>
-        <button className='blockchain-btn' onClick={() => { console.log('clicked'); return navigate('/walletGeneration')}}>Generate Wallet</button>
+        <button className='blockchain-btn' onClick={() => { console.log('clicked'); return navigate('/walletGeneration', {state: {cryptoChain}})}}>Generate Wallet</button>
       </div>
     </>
   )

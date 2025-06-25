@@ -3,69 +3,92 @@ import { Trash, Plus } from "lucide-react";
 import type { Wallet, WalletGenerationProps} from '../types/index'
 import  WalletCard  from '../components/wallet/WalletCard'
 import SecretPhraseSection from "../components/wallet/SecretPhraseSection";
-// import { useNavigate } from "react-router-dom";
 import myOwnFunction from "../utils/solana";
+import myOwnFunction2 from "../utils/ethereum"; // Import the Ethereum function
 import Loader from "../components/common/Loader";
-import { Navigate, useNavigate } from "react-router-dom";
-import SeedGeneration from "./SeedGeneration";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const WalletGeneration = ({ 
-  blockchainType = 'solana',
+  blockchainType: propBlockchainType,
   secretPhrase: initialSecretPhrase,
   wallets: initialWallets 
 }: WalletGenerationProps) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get blockchain type from navigation state or props
+  const { cryptoChain } = location.state || {};
+  const blockchainType = cryptoChain || propBlockchainType || 'solana';
+  
   const [wallets, setWallets] = useState<Wallet[]>(initialWallets || []);
   const [secretPhrase, setSecretPhrase] = useState<string[]>(initialSecretPhrase || []);
   const [showSecretPhrase, setShowSecretPhrase] = useState(false);
   const [loader, setLoader] = useState(true);
 
-  const navigate = useNavigate();
-
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoader(false);
-    }, 500);
+    }, 1000);
     return () => clearTimeout(timer);
   }, [])
 
+  // Function to get the appropriate wallet generation function
+  const getWalletFunction = () => {
+    return blockchainType === 'ethereum' ? myOwnFunction2 : myOwnFunction;
+  };
 
   useEffect(() => {
     if(!initialWallets || initialWallets.length == 0){
       const generateInitialWallet = async() => {
-        const data = await myOwnFunction();
-        const newWallet: Wallet = {
-              id: (wallets.length + 1).toString(),
-              name: `Wallet ${wallets.length + 1}`,
-              publicKey: `${data.publicKey}`,
-              privateKey: `${data.privateKey}`,
-              balance: blockchainType === 'solana' ? "0.00 SOL" : "0.00 ETH"
-        };
-        setWallets([newWallet]);
-        // [secretPhrase] = data.mnemonic
-        setSecretPhrase(data.mnemonic.split(' '));
-        console.log(wallets.length, "<- This is the lenght of the wallet ")
+        try {
+          const walletFunction = getWalletFunction();
+          const data = await walletFunction();
+          
+          const newWallet: Wallet = {
+                id: (wallets.length + 1).toString(),
+                name: `Wallet ${wallets.length + 1}`,
+                publicKey: `${data.publicKey}`,
+                privateKey: `${data.privateKey}`,
+                balance: blockchainType === 'ethereum' 
+                  ? `${data.balance.toFixed(4)} ETH` 
+                  : blockchainType === 'solana' 
+                    ? `${data.balance || 0} SOL` 
+                    : "0.00 ETH"
+          };
+          
+          setWallets([newWallet]);
+          setSecretPhrase(data.mnemonic.split(' '));
+          console.log(wallets.length, "<- This is the length of the wallet ");
+        } catch (error) {
+          console.error("Error generating initial wallet:", error);
+        }
       };
       generateInitialWallet();
     } else {
       setWallets(initialWallets);
     }
-  }, [initialWallets]);
+  }, [initialWallets, blockchainType]);
   
   const addWallet = async () => {
     try{
-        const data = await myOwnFunction();
+        const walletFunction = getWalletFunction();
+        const data = await walletFunction();
+        
         const newWallet: Wallet = {
             id: (wallets.length + 1).toString(),
             name: `Wallet ${wallets.length + 1}`,
             publicKey: data.publicKey,
             privateKey: data.privateKey,
-            balance: blockchainType === 'solana' ? `${data.balance} SOL` : '0.00 ETH'
+            balance: blockchainType === 'ethereum' 
+              ? `${data.balance.toFixed(4)} ETH` 
+              : blockchainType === 'solana' 
+                ? `${data.balance || 0} SOL` 
+                : '0.00 ETH'
         };
+        
         setWallets(prevWallet => [...prevWallet, newWallet]);
         console.log("Wallet added...");
         console.log("This is the wallet's length ->", wallets.length)
-
     } catch (error){
         console.log("Error while creating wallet!! Better you don't create it :( : ", error);
     }
@@ -81,11 +104,6 @@ const WalletGeneration = ({
       }));
       return updateWallets;
     });
-    // dynamic delete (no duplicate wallets)
-    // toast notifications
-    // mouse to cursor 
-    // shadow in copy and eye 
-    
   };
   
   const clearWallets = () => {
@@ -103,14 +121,6 @@ const WalletGeneration = ({
     });
   };
 
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoader(false);
-  //   }, 2000);
-  //   return () => clearTimeout(timer);
-  // }, [])
-
   if(loader){
     return <Loader/>
   }
@@ -118,28 +128,6 @@ const WalletGeneration = ({
   if(wallets.length == 0){
     return navigate('/SeedGeneration')
   }
-
-  // useEffect(() => {
-  //   if(!initialWallets || initialWallets.length == 0){
-  //     const generateInitialWallet = async() => {
-  //       const data = await myOwnFunction();
-  //       const newWallet: Wallet = {
-  //             id: (wallets.length + 1).toString(),
-  //             name: `Wallet ${wallets.length + 1}`,
-  //             publicKey: `${data.publicKey}`,
-  //             privateKey: `${data.privateKey}`,
-  //             balance: blockchainType === 'solana' ? "0.00 SOL" : "0.00 ETH"
-  //       };
-  //       setWallets([newWallet]);
-  //       // [secretPhrase] = data.mnemonic
-  //       setSecretPhrase(data.mnemonic.split(' '));
-  //     };
-  //     generateInitialWallet();
-  //   } else {
-  //     setWallets(initialWallets);
-  //   }
-  // }, [initialWallets]);
-  
 
   return (
     <>
@@ -154,7 +142,6 @@ const WalletGeneration = ({
         onCopy={copySecretPhrase}
       />
 
-      
       <div className="mt-12 mb-16">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -182,11 +169,11 @@ const WalletGeneration = ({
             </div>
           )}
         </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
-            {wallets.map((wallet) => (
-              <WalletCard key={wallet.id} wallet={wallet} onDelete={deleteWallet} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
+          {wallets.map((wallet) => (
+            <WalletCard key={wallet.id} wallet={wallet} onDelete={deleteWallet} />
+          ))}
+        </div>
       </div>
     </div>
     </>

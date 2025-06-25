@@ -37,7 +37,7 @@ const SecretPhraseSection = ({
             className="w-full py-3 btn-primary font-medium rounded-lg flex items-center justify-center gap-2 shadow-lg cursor-pointer"
           >
             <Copy size={20} />
-            Click Anywhere To Copy
+            Click To Copy
           </button>
         </div>
       ) : (
@@ -46,8 +46,8 @@ const SecretPhraseSection = ({
             onClick={() => setShowSecretPhrase(!showSecretPhrase)}
             className="p-2 glass rounded-lg text-primary hover:border-accent transition-all duration-300 cursor-pointer"
           >
-            {showSecretPhrase ? <Eye size={35}/> : <EyeOff size={35}/>}
-            
+            {showSecretPhrase ? <EyeOff size={35}/> : <Eye size={35}/>}
+
           </button>
           {/* <div className="w-16 h-16 glass rounded-full flex items-center justify-center mx-auto mb-4 cursor-pointer">
             <EyeOff size={24} className="text-secondary" />
