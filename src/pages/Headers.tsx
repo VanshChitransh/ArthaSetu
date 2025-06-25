@@ -1,7 +1,6 @@
-import React from 'react'
 import '../styles/style.css'
 
-const Headers = ({toggleTheme}) => {
+const Headers = ({toggleTheme} : {toggleTheme: () => void }) => {
   return (
     <header className="header">
           <a href="#" className="logo">

@@ -125,12 +125,20 @@ const WalletGeneration = ({
     return <Loader/>
   }
 
-  if(wallets.length == 0){
-    return navigate('/SeedGeneration')
-  }
+  useEffect(() => {
+    if(wallets.length == 0){
+          navigate('/SeedGeneration')
+    }
+  }, [wallets, loader])
+
+//   useEffect(() => {
+//   if (wallets.length === 0 && !loader) {
+//     navigate('/SeedGeneration');
+//   }
+// }, [wallets, loader]);
 
   return (
-    <>
+    <div>
     <div className="bg-gradient"></div>
     <div className="bg-gradient"></div>
     <div className="container-scrollable mx-auto px-6 py-8">
@@ -176,7 +184,7 @@ const WalletGeneration = ({
         </div>
       </div>
     </div>
-    </>
+    </div>
   );
 };
 

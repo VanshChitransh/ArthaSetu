@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type{ WalletCardProps } from '../../types';
-import { Eye, EyeOff, Copy, Trash, Plus } from "lucide-react";
+import { Eye, EyeOff, Copy, Trash} from "lucide-react";
 
 // Wallet Card Component
 const WalletCard = ({ wallet, onDelete }: WalletCardProps) => {

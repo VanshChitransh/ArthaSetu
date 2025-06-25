@@ -1,22 +1,3 @@
-// import React from 'react'
-// import '../styles/style.css'
-// const SeedGeneration = () => {
-//   return (
-//     <>
-//         <div className='bg-gradient'></div>
-//         <div className='container hero-section'>
-//             <h1 className=''>Secret Recovery Phase</h1>
-//             <p className='tagtitle'> Save these words in a safe place. </p>
-//             <input placeholder='Enter your seed phrase here'></input>
-//             <button className='blockchain-btn'>Generate Wallet</button>
-//         </div>
-//     </>
-//   )
-// }
-
-// export default SeedGeneration
-
-import React from 'react'
 import '../styles/style.css'
 import { useLocation, useNavigate } from 'react-router-dom';
 const SeedGeneration = () => {

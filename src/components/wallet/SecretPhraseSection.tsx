@@ -1,5 +1,5 @@
 import type{ SecretPhraseSectionProps } from "../../types";
-import { Eye, EyeOff, Copy, Trash, Plus } from "lucide-react";
+import { Eye, EyeOff, Copy } from "lucide-react";
 
 const SecretPhraseSection = ({ 
   secretPhrase, 

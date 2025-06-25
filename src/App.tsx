@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './styles/style.css'
 import Headers from './pages/Headers'
 import Footers from './pages/Footers';
-import Landing from './pages/landing';
+import Landing from './pages/Landing';
 import SeedGeneration from './pages/SeedGeneration';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WalletGeneration from './pages/WalletGeneration';
