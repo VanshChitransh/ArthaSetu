@@ -4,7 +4,7 @@ import type { Wallet, WalletGenerationProps} from '../types/index'
 import  WalletCard  from '../components/wallet/WalletCard'
 import SecretPhraseSection from "../components/wallet/SecretPhraseSection";
 import myOwnFunction from "../utils/solana";
-import myOwnFunction2 from "../utils/ethereum"; // Import the Ethereum function
+import myOwnFunction2 from "../utils/ethereum"; 
 import Loader from "../components/common/Loader";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -16,7 +16,6 @@ const WalletGeneration = ({
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get blockchain type from navigation state or props
   const { cryptoChain } = location.state || {};
   const blockchainType = cryptoChain || propBlockchainType || 'solana';
   
@@ -32,7 +31,6 @@ const WalletGeneration = ({
     return () => clearTimeout(timer);
   }, [])
 
-  // Function to get the appropriate wallet generation function
   const getWalletFunction = () => {
     return blockchainType === 'ethereum' ? myOwnFunction2 : myOwnFunction;
   };
@@ -68,6 +66,13 @@ const WalletGeneration = ({
       setWallets(initialWallets);
     }
   }, [initialWallets, blockchainType]);
+
+
+  // useEffect(() => {
+  //   if(wallets.length == 0){
+  //         navigate('/SeedGeneration')
+  //   }
+  // }, [wallets, loader])
   
   const addWallet = async () => {
     try{
@@ -109,7 +114,9 @@ const WalletGeneration = ({
   const clearWallets = () => {
     setWallets([]);
     setSecretPhrase([]);
+    navigate('/SeedGeneration')
     console.log("All wallets cleared!");
+
   };
 
   const copySecretPhrase = () => {
@@ -125,11 +132,11 @@ const WalletGeneration = ({
     return <Loader/>
   }
 
-  useEffect(() => {
-    if(wallets.length == 0){
-          navigate('/SeedGeneration')
-    }
-  }, [wallets, loader])
+  // useEffect(() => {
+  //   if(wallets.length == 0){
+  //         navigate('/SeedGeneration')
+  //   }
+  // }, [wallets, loader])
 
 //   useEffect(() => {
 //   if (wallets.length === 0 && !loader) {
